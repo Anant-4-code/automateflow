@@ -120,14 +120,6 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
       <div className="hero-cinematic-spotlight" style={{ opacity: theme === 'dark' ? 0.4 : 0.25 }} />
       <div className="cinematic-vignette" style={{ opacity: 0.4 }} />
       <div className="cinematic-light-beam" style={{ top: '-10%', left: '15%', opacity: 0.08 }} />
-      
-      {/* Translucent Curved Reflection Layer (Fluid Glass) */}
-      <div 
-        className="fluid-glass-reflection-curve"
-        style={{
-          transform: `translate3d(${mousePos.x * 25}px, ${mousePos.y * 25}px, 0) rotate(${mousePos.x * 2}deg)`,
-        }}
-      />
 
 
       {/* Content */}
@@ -242,9 +234,6 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
             <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
               Save ₹1Lakh+/Month
             </div>
-            <div className="text-[13px] leading-relaxed text-foreground/55 font-body font-light text-left mt-auto z-10 transition-colors duration-500">
-              Reduce operational overhead, manual follow-ups, repetitive team tasks, and communication inefficiencies through intelligent workflow automation.
-            </div>
           </div>
 
           {/* Card 2 */}
@@ -255,9 +244,6 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
             <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
               Serving Businesses & Government Teams
             </div>
-            <div className="text-[13px] leading-relaxed text-foreground/55 font-body font-light text-left mt-auto z-10 transition-colors duration-500">
-              Trusted by modern organizations to streamline operations, improve internal efficiency, accelerate response cycles, and scale workflows intelligently.
-            </div>
           </div>
 
           {/* Card 3 */}
@@ -267,9 +253,6 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
             </div>
             <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
               Save Time. Do More. Generate More Revenue.
-            </div>
-            <div className="text-[13px] leading-relaxed text-foreground/55 font-body font-light text-left mt-auto z-10 transition-colors duration-500">
-              Unified AI-powered systems designed to increase productivity, improve customer engagement, accelerate response times, and improve overall business performance.
             </div>
           </div>
         </motion.div>
