@@ -43,11 +43,11 @@
   --section-bg-cta: transparent;
   --section-bg-faq: transparent;
   
-  --glass-bg: rgba(244, 248, 248, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-bg: rgba(244, 248, 248, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.4);
   --glass-shine: rgba(255, 255, 255, 0.7);
   --glass-hover-border: rgba(99, 200, 180, 0.55);
-  --glass-blur: blur(20px) saturate(140%);
+  --glass-blur: blur(28px) saturate(160%);
   
   --spotlight-primary: rgba(99, 200, 180, 0.08);
   --spotlight-secondary: rgba(100, 245, 210, 0.08);
@@ -94,11 +94,11 @@
   --section-bg-cta: transparent;
   --section-bg-faq: transparent;
   
-  --glass-bg: rgba(10, 18, 28, 0.35);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(8, 12, 20, 0.22);
+  --glass-border: rgba(255, 255, 255, 0.06);
   --glass-shine: rgba(255, 255, 255, 0.05);
   --glass-hover-border: rgba(99, 200, 180, 0.45);
-  --glass-blur: blur(20px) saturate(180%);
+  --glass-blur: blur(28px) saturate(210%);
   
   --spotlight-primary: rgba(99, 200, 180, 0.15);
   --spotlight-secondary: rgba(100, 245, 210, 0.18);

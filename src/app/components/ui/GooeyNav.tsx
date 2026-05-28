@@ -163,6 +163,7 @@ export default function GooeyNav({
     if (activeLi) {
       updateEffectPosition(activeLi);
       textRef.current?.classList.add('active');
+      filterRef.current?.classList.add('active');
     }
 
     const resizeObserver = new ResizeObserver(() => {
