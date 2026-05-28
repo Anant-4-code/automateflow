@@ -244,7 +244,7 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
               <TrendingUp className="h-5 w-5 text-[#63ffd7]" />
             </div>
             <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
-              Save ₹1Lakh+/Month
+              Reduce Operational Costs Through Intelligent Automation
             </div>
           </div>
 
