@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowUpRight, Play, Zap } from 'lucide-react';
+import { ArrowUpRight, Play, Zap, TrendingUp, Building, DollarSign } from 'lucide-react';
 import BlurText from './BlurText';
 import FloatingLines from './FloatingLines';
 
@@ -8,6 +9,25 @@ interface AutomateFlowHeroProps {
 }
 
 export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroProps) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const x = (clientX / window.innerWidth) - 0.5;
+    const y = (clientY / window.innerHeight) - 0.5;
+    setMousePos({ x, y });
+
+    // Update mouse coords for spotlight/glow interaction in outcome cards
+    const cards = document.querySelectorAll('.enterprise-outcome-card');
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const cardX = clientX - rect.left;
+      const cardY = clientY - rect.top;
+      (card as HTMLElement).style.setProperty('--mouse-x', `${cardX}px`);
+      (card as HTMLElement).style.setProperty('--mouse-y', `${cardY}px`);
+    });
+  };
+
   const fadeInVariant = {
     initial: { filter: 'blur(10px)', opacity: 0, y: 20 },
     animate: { filter: 'blur(0px)', opacity: 1, y: 0 },
@@ -19,6 +39,7 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
     <section 
       id="home" 
       className="relative min-h-screen bg-background text-foreground transition-colors flex flex-col justify-center items-center px-4 pt-24 pb-16"
+      onMouseMove={handleMouseMove}
       style={{ 
         isolation: 'isolate',
         background: theme === 'dark' 
@@ -99,6 +120,14 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
       <div className="hero-cinematic-spotlight" style={{ opacity: theme === 'dark' ? 0.4 : 0.25 }} />
       <div className="cinematic-vignette" style={{ opacity: 0.4 }} />
       <div className="cinematic-light-beam" style={{ top: '-10%', left: '15%', opacity: 0.08 }} />
+      
+      {/* Translucent Curved Reflection Layer (Fluid Glass) */}
+      <div 
+        className="fluid-glass-reflection-curve"
+        style={{
+          transform: `translate3d(${mousePos.x * 25}px, ${mousePos.y * 25}px, 0) rotate(${mousePos.x * 2}deg)`,
+        }}
+      />
 
 
       {/* Content */}
@@ -203,33 +232,44 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
           initial={fadeInVariant.initial}
           animate={fadeInVariant.animate}
           transition={{ duration: 0.6, delay: 1.3, ease: 'easeOut' }}
-          className="flex flex-wrap items-stretch gap-4 justify-center mt-5 mb-8"
+          className="flex flex-wrap items-stretch gap-6 justify-center mt-5 mb-8 max-w-6xl w-full"
         >
-          <div className="liquid-glass-strong p-5 w-44 rounded-[1.25rem] flex flex-col transition-all duration-500">
-            <Zap className="h-7 w-7 text-foreground mb-auto transition-colors duration-500" />
-            <div className="font-heading text-foreground text-3xl tracking-tight leading-none mt-3 transition-colors duration-500">
-              3× Faster
+          {/* Card 1 */}
+          <div className="enterprise-outcome-card">
+            <div className="p-2 rounded-lg bg-[rgba(99,200,180,0.1)] border border-[rgba(99,200,180,0.15)] mb-6 z-10 transition-colors">
+              <TrendingUp className="h-5 w-5 text-[#63ffd7]" />
             </div>
-            <div className="text-xs text-foreground/55 font-body font-light mt-2 transition-colors duration-500">
-              Lead Response Time
+            <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
+              Save ₹1Lakh+/Month
             </div>
-          </div>
-          <div className="liquid-glass-strong p-5 w-44 rounded-[1.25rem] flex flex-col transition-all duration-500">
-            <div className="h-7 w-7 text-foreground mb-auto text-2xl transition-colors duration-500">◎</div>
-            <div className="font-heading text-foreground text-3xl tracking-tight leading-none mt-3 transition-colors duration-500">
-              ₹5Cr+
-            </div>
-            <div className="text-xs text-foreground/55 font-body font-light mt-2 transition-colors duration-500">
-              Revenue Automated
+            <div className="text-[13px] leading-relaxed text-foreground/55 font-body font-light text-left mt-auto z-10 transition-colors duration-500">
+              Reduce operational overhead, manual follow-ups, repetitive team tasks, and communication inefficiencies through intelligent workflow automation.
             </div>
           </div>
-          <div className="liquid-glass-strong p-5 w-44 rounded-[1.25rem] flex flex-col transition-all duration-500">
-            <div className="h-7 w-7 text-foreground mb-auto text-2xl transition-colors duration-500">◈</div>
-            <div className="font-heading text-foreground text-3xl tracking-tight leading-none mt-3 transition-colors duration-500">
-              500+
+
+          {/* Card 2 */}
+          <div className="enterprise-outcome-card">
+            <div className="p-2 rounded-lg bg-[rgba(99,200,180,0.1)] border border-[rgba(99,200,180,0.15)] mb-6 z-10 transition-colors">
+              <Building className="h-5 w-5 text-[#63ffd7]" />
             </div>
-            <div className="text-xs text-foreground/55 font-body font-light mt-2 transition-colors duration-500">
-              Enterprise Clients
+            <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
+              Serving Businesses & Government Teams
+            </div>
+            <div className="text-[13px] leading-relaxed text-foreground/55 font-body font-light text-left mt-auto z-10 transition-colors duration-500">
+              Trusted by modern organizations to streamline operations, improve internal efficiency, accelerate response cycles, and scale workflows intelligently.
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="enterprise-outcome-card">
+            <div className="p-2 rounded-lg bg-[rgba(99,200,180,0.1)] border border-[rgba(99,200,180,0.15)] mb-6 z-10 transition-colors">
+              <DollarSign className="h-5 w-5 text-[#63ffd7]" />
+            </div>
+            <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
+              Save Time. Do More. Generate More Revenue.
+            </div>
+            <div className="text-[13px] leading-relaxed text-foreground/55 font-body font-light text-left mt-auto z-10 transition-colors duration-500">
+              Unified AI-powered systems designed to increase productivity, improve customer engagement, accelerate response times, and improve overall business performance.
             </div>
           </div>
         </motion.div>

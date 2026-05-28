@@ -79,7 +79,7 @@ export default function FinalCTASection() {
 
             {/* Contact Line */}
             <p className="font-body text-xs text-foreground/40 transition-colors duration-500">
-              Sanyam Chhoriya · 9307783836 / 8668960307 · ceo@automateflow.tech
+              Talk with our automation specialists to explore enterprise workflows · ceo@automateflow.tech
             </p>
           </div>
         </BorderGlow>
