@@ -1,0 +1,11 @@
+/* The container must be absolutely positioned so it fills whatever
+   parent it's placed inside — even parents whose height comes from
+   inset constraints rather than an explicit height property. */
+.floating-lines-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}

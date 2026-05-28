@@ -1,0 +1,543 @@
+# AUTOMATE FLOW AI — Single Page Landing Site
+## Complete Build Prompt (No Code — Design + Content Specification)
+
+---
+
+## OVERVIEW & MISSION
+
+Build a **single scrollable HTML page** for **Automate Flow AI** — an all-in-one CRM + automation platform built for Indian SMBs (₹50L–₹5Cr revenue). The page replaces the current green/white generic SaaS website with a **dark, cinematic, water-glass morphism** experience that makes the software feel premium, intelligent, and trustworthy.
+
+**Brand contact (use in footer and CTA):**
+- Founder: Sanyam Chhoriya
+- Phone: 9307783836 / 8668960307
+- Email: ceo@automateflow.tech
+- WhatsApp: wa.me/919307783836
+
+---
+
+## AESTHETIC DIRECTION
+
+**Theme:** Dark cinematic + water glass morphism
+**Mood:** Premium, intelligent, editorial — like a luxury tech product, not a SaaS dashboard
+**Background:** Near-black (#040408 and #000000) — never white, never light
+**All text:** White only — #ffffff and rgba(255,255,255,X) for hierarchy. Zero colored text except the single teal accent
+**Accent color:** Aqua-teal — rgba(99,200,180,X) — used only for labels, borders on hero cards, and hover highlights
+**No gradients on backgrounds** — depth comes from glass layers, ambient glows, and the grid pattern
+
+**The single thing users must feel:** "This is nothing like GoHighLevel. This is the future."
+
+---
+
+## FONTS
+
+Load both from Google Fonts:
+
+**Display font:** `Instrument Serif` — italic weight only, used for ALL headlines, section headings, large numbers, and the logo monogram. Always rendered italic. Letter-spacing: -3px to -4px. Line-height: 0.85 to 0.90.
+
+**Body font:** `Barlow` — weights 300 (body copy), 400 (nav links), 500 (labels/chips), 600 (CTAs and bold labels). Used for everything that is not a headline.
+
+Never use Inter, Roboto, or system fonts anywhere on the page.
+
+---
+
+## GLASS SYSTEM (3 Variants — All Built in CSS)
+
+These are the three reusable glass panel styles applied throughout the page:
+
+**Variant 1 — `.liquid-glass` (Subtle)**
+- For: navbar pill, small chips, tags, secondary card borders
+- Effect: backdrop-filter blur(4px), nearly transparent background (rgba white 0.01), subtle inset top highlight (rgba white 0.10)
+- Border: implemented as a pseudo-element gradient — bright at top (45% opacity), fades to zero at 40%, returns to bright at bottom — creates a glass edge without a real border
+- No hard border line
+
+**Variant 2 — `.liquid-glass-strong` (Heavy)**
+- For: primary CTA buttons, stat cards, modal-style elements
+- Effect: backdrop-filter blur(50px), slightly more opaque background (rgba white 0.07), stronger inset highlight (rgba white 0.15)
+- Same gradient border pseudo-element as above but more opaque (0.5 stops instead of 0.45)
+- Outer shadow: 4px 4px 4px rgba(0,0,0,0.05)
+
+**Variant 3 — `.water-glass` (AF AI Exclusive)**
+- For: all feature cards, testimonial cards, pricing cards, FAQ items, pain-point cards
+- Effect: backdrop-filter blur(20px) + saturate(160%), background is a subtle diagonal gradient of blue-teal tones (rgba teal 0.08 → rgba deep-blue 0.04 → rgba aqua 0.06)
+- Border: 1px solid rgba(99,200,180,0.18)
+- Shadow: inset 0 1px rgba white 0.12, outer 0 8px 32px rgba black 0.4
+- Animated pseudo-element: a caustic shimmer that slowly drifts left-right-up-down over 6 seconds, opacity breathing 0.5→1→0.7, simulating light through moving water
+- This class makes AF AI cards feel different from every other glassmorphism site
+
+**Hover state for all glass cards:**
+Border color shifts from rgba(99,200,180,0.18) to rgba(99,200,180,0.35), card lifts -2px on Y axis, transition 300ms ease
+
+**Shimmer sweep on CTA buttons:**
+On hover, a diagonal highlight (rgba white 0.08) sweeps left to right across the button in 400ms. Implemented via ::after pseudo-element and keyframe animation, NOT CSS transition.
+
+---
+
+## PAGE STRUCTURE — 8 SECTIONS IN ORDER
+
+The page is one continuous scroll. No routing, no tabs. Smooth scroll behavior on the html element.
+
+---
+
+### SECTION 1 — NAVBAR (Fixed, top of viewport)
+
+**Position:** Fixed, top: 0, full width, z-index 50
+**Height:** 72px
+**Default background:** Transparent
+**After 80px scroll:** Adds backdrop-filter blur(24px) and background rgba(0,0,0,0.6) — smooth transition 300ms
+
+**Three zones left-to-right:**
+
+LEFT — Logo block:
+- Small rounded square (40×40px, border-radius 12px) in liquid-glass style
+- Inside: "AF" in Instrument Serif italic, white, 18px
+- Next to it: two lines of text — "AUTOMATE" in Barlow 600 13px white, below it "FLOW AI" in Barlow 300 11px rgba white 0.5, letter-spacing 0.08em
+
+CENTER — Navigation links (hidden on mobile, visible on desktop):
+- Wrapped in a liquid-glass pill (rounded-full, padding 6px)
+- Four links inside: Home · Features · Pricing · Contact Us
+- Each link: Barlow 400 13px, rgba white 0.85, padding 8px 16px
+- On hover: background rgba white 0.08 appears with border-radius pill, transition 200ms
+- After the links: "Get Started" button (liquid-glass-strong, rounded-full, padding 9px 20px, Barlow 600 13px white, ArrowUpRight icon 14px)
+
+RIGHT — WhatsApp icon button:
+- Circle 38×38px, background rgba(37,211,102,0.15), border 1px solid rgba(37,211,102,0.3)
+- WhatsApp SVG icon in #25D366 green
+
+---
+
+### SECTION 2 — HERO
+
+**Height:** 100vh minimum
+**Background:** Pure black (#000)
+**Decorative elements (not video — use CSS only):**
+- Large ambient glow orb: position absolute, 600px wide 400px tall, top -10%, centered horizontally, radial-gradient from rgba(44,95,138,0.15) to transparent, filter blur(80px)
+- Smaller teal orb: 300px, bottom-right area, rgba(99,200,180,0.08), blur 80px
+- These sit behind all content at z-index 0
+
+**Content layout:** Flex column, centered both axes, padding-top 96px, text-align center
+
+**Content order top to bottom:**
+
+1. **Announcement badge** — liquid-glass rounded-full pill
+   - Inside: white filled pill chip "NEW" (Barlow 700 11px black text, letter-spacing 0.04em) + text "AI Autopilot — Your Business on Cruise Control" (Barlow 13px rgba white 0.85)
+   - Entrance animation: starts at blur(10px) opacity 0 translateY(20px), animates to sharp/opaque/Y:0 after 0.4s delay
+
+2. **Main headline** — two lines
+   - Line 1: "Your AI-Powered Business Autopilot" in Instrument Serif italic, clamp(52px, 8vw, 88px), white, letter-spacing -4px, line-height 0.85
+   - Line 2: "Capture, Engage & Grow" same size but color rgba(99,200,180,0.9)
+   - Word-by-word blur entrance: each word starts at blur(10px) opacity 0 translateY(50px), animates through a middle keyframe at blur(5px) opacity 0.5 translateY(-5px), then to sharp/opaque/Y:0. Each word staggered by 100ms. Duration 0.7s easeOut.
+
+3. **Subheading** — Barlow 300 15px rgba white 0.65, max-width 520px, line-height 1.65
+   - Text: "Streamline your processes, improve customer interactions, and drive growth effortlessly. One platform replaces 12 tools — CRM, automation, payments, AI agents, and more."
+   - Entrance: blur fade, delay 0.8s
+
+4. **CTA buttons row** — flex, gap 20px, centered, margin-bottom 36px
+   - Primary: liquid-glass-strong rounded-full, padding 12px 24px, Barlow 600 14px white, text "Start Free Trial" + ArrowUpRight icon 16px, shimmer hover effect
+   - Secondary: no background, flex with Play icon 14px + "Watch Demo", Barlow 400 14px rgba white 0.75
+
+5. **Trust chips row** — flex, gap 10px, centered, wrap
+   - Three liquid-glass rounded-full pills: "✦ No credit card required" · "✦ Free trial included" · "✦ Setup in 15 min"
+   - Barlow 11px rgba white 0.6, teal ✦ symbol
+
+6. **Stat cards row** — flex, gap 16px, centered, wrap, margin-top 20px
+   - Three liquid-glass-strong cards, each 180px wide, padding 20px 24px, border-radius 20px
+   - Card 1: ⚡ icon, "3× Faster" (Instrument Serif italic 28px), "Lead Response Time" (Barlow 300 11px rgba white 0.55)
+   - Card 2: ◎ icon, "₹5Cr+" same style, "Revenue Automated"
+   - Card 3: ◈ icon, "500+" same style, "Businesses Trust Us"
+   - Entrance: delay 1.3s
+
+7. **Integrations row** — at bottom of hero section, padding-bottom 32px
+   - Small liquid-glass chip "INTEGRATES WITH YOUR EXISTING TOOLS" (Barlow 600 11px rgba white 0.5, letter-spacing 0.06em)
+   - Below: five names in Instrument Serif italic 22px rgba white 0.35: WhatsApp · Gmail · Razorpay · Stripe · Google
+
+---
+
+### SECTION 3 — PROBLEM
+
+**Background:** #050508 with a subtle CSS grid overlay — two sets of lines (horizontal and vertical) at 60px spacing, each line is rgba(99,200,180,0.03), creating an extremely faint grid visible only against the dark bg
+**Padding:** 100px top and bottom
+
+**Content:**
+
+1. **Section kicker** — Barlow 600 11px uppercase letter-spacing 0.14em rgba(99,200,180,0.7) — "// The Problem"
+
+2. **Heading** — Instrument Serif italic clamp(44px,6vw,80px) letter-spacing -3px line-height 0.9, max-width 700px
+   - Line 1: "Running a business" — white
+   - Line 2: "shouldn't feel like" — rgba white 0.25
+   - Line 3: "herding cats." — white
+
+3. **Four pain cards** — CSS grid, auto-fit columns minimum 240px, gap 16px
+   - Each card: water-glass variant, padding 28px, border-radius 20px
+   - Large dim number (01–04) in Instrument Serif italic 48px rgba white 0.08 as decorative heading
+   - Title: Barlow 600 16px white
+   - Body: Barlow 300 13px rgba white 0.5, line-height 1.65
+   - Cards scroll-reveal staggered by 80ms each
+
+   Pain 01 — "Too Many Tools": "WhatsApp here, email there, CRM somewhere else. Nothing talks to each other."
+   Pain 02 — "Leads Falling Through": "Manual follow-ups fail. Hot leads go cold while your team is stuck in spreadsheets."
+   Pain 03 — "Missed Revenue": "Payments slip, reminders don't go, subscriptions lapse. Money left on the table every week."
+   Pain 04 — "No Visibility": "No single dashboard. You don't know what's working until it's too late to fix it."
+
+4. **Transition line** — centered below cards, margin-top 80px
+   - Instrument Serif italic clamp(24px,3vw,36px) rgba(99,200,180,0.6) — "There is a better way →"
+
+---
+
+### SECTION 4 — CAPABILITIES
+
+**Background:** #000 with two ambient glow orbs (teal left, deep blue right)
+**No video** — pure CSS atmosphere
+**Padding:** 100px top, 60px bottom
+
+**Content:**
+
+1. **Kicker** — "// Capabilities" same style as above
+
+2. **Heading** — Instrument Serif italic clamp(52px,7vw,96px) letter-spacing -3px line-height 0.9
+   - "Automation" — white
+   - "evolved." — rgba white 0.3
+
+3. **Three capability cards** — CSS grid auto-fit min 300px, gap 20px, margin-top 64px
+   Each card: water-glass, padding 24px, border-radius 20px, min-height 360px, flex column
+
+   **Card structure (top to bottom):**
+   - Top row: icon container (liquid-glass 44×44px border-radius 12px, white SVG icon 24px) on left + tag chips on right (flex-wrap, up to 4 chips, liquid-glass pill 10px Barlow)
+   - Middle: flex-1 spacer pushes content apart
+   - Bottom: card title in Instrument Serif italic 36px white letter-spacing -1px, then body text Barlow 300 13px rgba white 0.65 line-height 1.65 max-width 280px
+
+   **Card 1 — AI Autopilot**
+   - Icon: abstract brain/bolt SVG
+   - Tags: AI Chat Agents · Auto Follow-ups · Lead Qualification · 24/7 Replies
+   - Body: "AI agents handle customer queries, qualify leads, follow up automatically — your business runs while you sleep."
+
+   **Card 2 — Unified Inbox**
+   - Icon: message/envelope SVG
+   - Tags: WhatsApp · SMS & Email · Instagram DM · All in One Inbox
+   - Body: "Every customer conversation — WhatsApp, SMS, email, Instagram, Facebook — in one place. Never miss a message."
+
+   **Card 3 — Revenue Recovery**
+   - Icon: currency/rupee SVG
+   - Tags: Auto Invoicing · Payment Reminders · Recovery Flows · Subscriptions
+   - Body: "Automatic payment reminders, outstanding follow-ups, and recovery sequences so not a single rupee slips through."
+
+---
+
+### SECTION 5 — ALL FEATURES (12 Categories)
+
+**Background:** #040408 with the same faint grid pattern as Section 3
+**Padding:** 100px top and bottom
+
+**Content:**
+
+1. **Kicker** — "// Everything You Need"
+
+2. **Heading:**
+   - "12 tools." — white
+   - "One platform." — rgba white 0.25
+
+3. **Layout:** Two-column on desktop — left sticky nav (240px wide) + right content panel
+
+**LEFT STICKY NAV** (position sticky, top 100px):
+- 12 category buttons stacked vertically, gap 4px
+- Each: flex row with icon symbol (14px) + label text (Barlow 13px), padding 10px 14px, border-radius 10px
+- Active state: background rgba(99,200,180,0.12), border 1px solid rgba(99,200,180,0.25), text white font-weight 500, icon teal
+- Inactive state: transparent bg, text rgba white 0.4 font-weight 400, icon rgba white 0.3
+- Hover: background rgba white 0.05, transition 200ms
+
+**The 12 categories and their icons:**
+01 ◈ CRM & Contacts | 02 ◉ Communication | 03 ◇ Website & Funnels | 04 ⚡ Automation | 05 ◻ Appointments | 06 ▦ Pipeline & Sales | 07 ₹ Payments | 08 ◎ Courses | 09 ★ Reputation | 10 ✦ AI Features | 11 ◆ Analytics | 12 ⊕ Integrations
+
+**RIGHT CONTENT PANEL:**
+- When a category is clicked, the panel updates with that category's features
+- Entry animation: panel slides in from x:20 with opacity 0→1, duration 300ms easeOut
+- Old panel exits to x:-10 opacity 0, 200ms
+
+Panel layout per category:
+- Large icon + category title in Instrument Serif italic 48px white letter-spacing -2px
+- Features grid: auto-fill columns min 220px, gap 10px
+- Each feature: water-glass card, padding 14px 18px, border-radius 12px, flex row — teal check icon (13px) + Barlow 13px rgba white 0.8
+
+**Feature lists per category:**
+- CRM & Contacts: Unlimited contacts & users · Smart lists with tagging & segmentation · Unified conversation feed · Bulk actions for messages · Mobile CRM app · Custom fields & values
+- Communication: Two-way WhatsApp messaging · Two-way SMS & MMS · Email marketing & campaigns · Built-in calling system with tracking · Call recording · Missed-call auto-reply · Facebook Messenger automation · Instagram DM automation · Google Business messaging · All conversations in one inbox
+- Website & Funnels: Drag-and-drop website builder · Unlimited landing pages · Sales funnel builder · Forms and surveys · Blog builder · Ready-made templates · Hosting included
+- Automation: Visual drag-and-drop automation builder · Trigger-based workflows · Multi-channel automation (WhatsApp, SMS, email, calls) · Pre-built automation templates · Automatic lead assignment · Automatic pipeline movement
+- Appointments: Unlimited calendars · Automatic appointment booking · Team-wise appointment distribution · Google & Outlook calendar sync · Automated reminders to reduce no-shows · Paid appointment booking option
+- Pipeline & Sales: Unlimited sales pipelines · Drag-and-drop pipeline view · Opportunity tracking · Lead scoring · Conversion tracking · Deal stage automation
+- Payments: Order creation from calls or messages · Sending order prices on WhatsApp or email · Invoice generation · Online payment links · Subscription & recurring payments · Payment reminders before due date · Outstanding payment follow-ups after due date · Automatic payment recovery follow-ups · Complete payment & balance tracking
+- Courses: Online course creation · Membership portals · Digital product delivery · Community access
+- Reputation: Automated Google review requests · Review follow-ups · Review monitoring · Review response management · Review display widgets
+- AI Features: AI chat agents for customer replies · AI follow-ups · AI content generation · AI appointment booking assistance · AI lead qualification
+- Analytics: Custom dashboards · Sales & conversion reports · Campaign performance tracking · Revenue & ROI tracking
+- Integrations: Payment gateway integrations · Marketing & ad integrations · API & automation integrations · Suitable for small businesses to ₹5Cr+ companies
+
+**Mobile behavior:** On mobile, the sticky left nav becomes a horizontal scrollable pill row at the top of this section. Content panel below it.
+
+---
+
+### SECTION 6 — SOCIAL PROOF
+
+**Background:** #050508
+**Padding:** 100px top and bottom
+
+**Content:**
+
+1. **Kicker** — "// Social Proof"
+
+2. **Heading:**
+   - "Smart solutions." — white
+   - "Real results." — rgba white 0.25
+
+3. **Testimonial marquee** — continuous horizontal scroll, pauses on hover
+   - Two identical rows of cards side by side (original + duplicate) so scroll appears infinite
+   - Each testimonial card: water-glass, padding 24px 28px, border-radius 20px, width 320px fixed
+   - Quote text: Barlow 300 13px rgba white 0.75, line-height 1.65, in quotation marks
+   - Author name: Barlow 600 13px white
+   - Role/business: Barlow 11px rgba white 0.4
+   - Animation: translateX from 0 to -50% over 28 seconds, linear, infinite
+
+   **Six testimonials:**
+   - Ravi K., Clinic Owner Pune: "We reduced no-shows by 60% in the first month with automated appointment reminders."
+   - Priya S., E-commerce Founder: "Our payment recovery rate went from 20% to 78%. AF AI pays for itself 10× over."
+   - Anil M., Digital Agency Mumbai: "Managing 40 client WhatsApp accounts from one inbox changed everything for our team."
+   - Sneha D., Coaching Business: "The AI chat agent handles 80% of inquiries before I even see them. Insane leverage."
+   - Kiran T., Real Estate Bangalore: "Lead scoring and pipeline automation turned our sales team into a machine."
+   - Meera P., Healthcare Chain: "5 clinics, one dashboard. We finally have visibility across the entire business."
+
+4. **Outcome stat cards** — grid auto-fit min 260px, gap 16px, max-width 1100px centered, margin-top 80px
+   Each card: water-glass, padding 32px, border-radius 20px
+   - Kicker label: Barlow 600 10px rgba(99,200,180,0.6) uppercase letter-spacing 0.12em
+   - Large number: Instrument Serif italic 56px white letter-spacing -2px line-height 1
+   - Description: Barlow 300 13px rgba white 0.5 line-height 1.6
+
+   Card 1 — "Mail Management" · "4× ROI" · "Average return across 500+ businesses using AF AI automation."
+   Card 2 — "Customer Tracking" · "92%" · "Lead follow-up rate when using AI-powered automated sequences."
+   Card 3 — "Advanced Reporting" · "3 min" · "Time to your full business health report — live, always up to date."
+
+---
+
+### SECTION 7 — PRICING
+
+**Background:** #040408
+**Padding:** 100px top and bottom
+**Max-width:** 900px centered
+
+**Content:**
+
+1. **Kicker** — "// Choose a Plan"
+
+2. **Heading:**
+   - "A package that suits" — white
+   - "your workflow." — rgba white 0.3
+
+3. **Subtext** — Barlow 300 15px rgba white 0.45 centered — "No credit card required · Cancel anytime · Setup in 15 minutes"
+
+4. **Two pricing cards** — side by side, gap 20px, auto-fit min 340px
+
+**Card 1 — Starter Plan:**
+- Glass style: liquid-glass
+- Plan name: Barlow 600 13px rgba white 0.5, uppercase, letter-spacing 0.08em — "STARTER"
+- Price: "₹4,999" in Instrument Serif italic 52px white letter-spacing -2px + "/mo" in Barlow 14px rgba white 0.4
+- Tagline: Barlow 300 13px rgba white 0.5 — "Perfect for solo founders and small teams"
+- CTA button: liquid-glass rounded-full, "Start Free Trial" + ArrowUpRight, Barlow 600 14px white
+- Feature list: 8 items with teal check icons
+  - Unlimited contacts
+  - WhatsApp + SMS + Email
+  - 2-way WhatsApp automation
+  - Basic CRM & pipeline
+  - Appointment booking
+  - Payment links & invoicing
+  - 5 automation workflows
+  - Standard support
+
+**Card 2 — Growth Plan (Featured):**
+- Glass style: water-glass with border 1px solid rgba(99,200,180,0.35) — stronger than usual
+- Badge above card: "Most Popular" pill in rgba(99,200,180,0.9) background, black text Barlow 700 11px
+- Plan name — "GROWTH"
+- Price: "₹9,999/mo" same style
+- Tagline: "For scaling businesses that run on autopilot"
+- CTA: background rgba(99,200,180,0.18) border rgba(99,200,180,0.35) — teal-tinted CTA
+- Feature list: 8 items
+  - Everything in Starter
+  - AI chat agents
+  - Unlimited automation workflows
+  - Advanced analytics & reporting
+  - Course & membership portal
+  - Reputation management
+  - Team collaboration
+  - Priority WhatsApp support
+
+---
+
+### SECTION 8 — FAQ
+
+**Background:** #050508
+**Padding:** 100px top and bottom
+**Max-width:** 900px centered
+
+**Content:**
+
+1. **Kicker** — "// FAQs"
+
+2. **Header row** — flex, space between, align items start
+   - Left: Heading "Frequently" white + "asked questions." rgba white 0.3
+   - Right: small link "View more questions →" in teal, Barlow 13px
+
+3. **FAQ grid** — two columns on desktop (1 column mobile), gap 10px
+   Each FAQ item: water-glass, border-radius 16px, cursor pointer
+   - Collapsed: question text + ChevronDown icon, padding 20px 22px, Barlow 500 13px white
+   - Expanded: question + answer text (Barlow 300 13px rgba white 0.5, line-height 1.65), padding on answer 0 22px 20px
+   - ChevronDown rotates 180deg when open, transition 300ms
+   - Click toggles open/closed — only one open at a time on mobile, multiple allowed on desktop
+
+   **Six FAQ pairs:**
+   Q: Can I integrate AF AI with my other tools?
+   A: Yes — AF AI connects with WhatsApp Business API, Gmail, Google Calendar, Razorpay, Stripe, Facebook, Instagram, and 100+ tools via Zapier and native integrations.
+
+   Q: Is AF AI suitable for small businesses?
+   A: Absolutely. AF AI is designed for businesses from ₹50L to ₹5Cr revenue. Our starter plan works perfectly for solo founders and small teams just starting out.
+
+   Q: Do you offer a mobile app?
+   A: Yes — we have a full-featured mobile CRM app for iOS and Android so you can manage leads, reply to messages, and check reports on the go.
+
+   Q: Is onboarding and training support provided?
+   A: Yes. Every plan includes a dedicated onboarding call, setup assistance, and access to our training resources. Growth plan users get priority WhatsApp support.
+
+   Q: Is my data secure on your platform?
+   A: We use bank-grade encryption, regular backups, and GDPR-compliant data practices. Your customer data never leaves secure infrastructure.
+
+   Q: How can I track customer support quality?
+   A: The reporting dashboard shows response times, resolution rates, conversation volumes, and customer satisfaction scores across all channels.
+
+---
+
+### SECTION 9 — FINAL CTA
+
+**Background:** #040408
+**Padding:** 80px top and bottom
+
+**Content:**
+One large water-glass card, padding 72px 64px, border-radius 32px, border 1px solid rgba(99,200,180,0.2), max-width 900px centered. Text-align center. Large ambient glow orb behind it.
+
+Inside the card:
+1. Kicker: "// Get Started Today" — teal
+2. Heading: "Always within reach" white + "to support your growth." rgba(99,200,180,0.8)
+3. Subtext: Barlow 300 15px rgba white 0.5, max-width 480px centered — "Join 500+ businesses running on autopilot. Start your free trial — no credit card required."
+4. Two CTA buttons:
+   - Primary: liquid-glass-strong, background rgba(99,200,180,0.18), border rgba(99,200,180,0.35), "Start Free Trial" + ArrowUpRight, Barlow 600 15px white
+   - Secondary: background rgba(37,211,102,0.08), border rgba(37,211,102,0.2), WhatsApp icon + "Chat on WhatsApp", Barlow 400 15px rgba white 0.7
+5. Contact line: Barlow 12px rgba white 0.3 — "Sanyam Chhoriya · 9307783836 / 8668960307 · ceo@automateflow.tech"
+
+---
+
+### SECTION 10 — FOOTER
+
+**Background:** #000
+**Border-top:** 1px solid rgba white 0.05
+**Padding:** 48px
+
+Three-column flex row (stacks on mobile):
+- Left: AF monogram logo + "AUTOMATE FLOW AI" + tagline "Replacing 12 tools with one intelligent platform." rgba white 0.3
+- Center: Three text links — Features · Pricing · Contact Us — Barlow 13px rgba white 0.4
+- Right: Copyright line "© 2025 Automate Flow AI. All rights reserved." Barlow 11px rgba white 0.2
+
+---
+
+## SCROLL REVEAL BEHAVIOR
+
+Every section's content (headings, cards, stat numbers) should be invisible on page load and become visible when they enter the viewport. Use IntersectionObserver with a 0.12 threshold.
+
+**Reveal animation:** opacity 0 → 1, translateY(32px) → translateY(0), duration 700ms ease, transition
+
+**Stagger for grids:** Cards in a grid reveal with a delay offset (80ms per card) so they cascade in from left to right visually.
+
+**Section kickers** reveal first (no delay), then headings (80ms delay), then cards/content (160ms+ delay).
+
+---
+
+## NAVIGATION SCROLL BEHAVIOR
+
+When a nav link is clicked, the page smooth-scrolls to the corresponding section. Each section has an id: #home, #features, #pricing, #contact.
+
+Active nav link: when the corresponding section is in the viewport (tracked by IntersectionObserver), that nav link gets a subtle background rgba white 0.08 in the nav pill.
+
+---
+
+## AMBIENT GLOW PLACEMENT
+
+Decorative radial gradient blobs (filter: blur(80px), pointer-events: none, position: absolute, z-index 0) placed in each section to create atmospheric depth:
+
+- Hero: large blue-teal glow top-center (600×400px, rgba 44,95,138,0.15) + smaller teal bottom-right (300×300px, rgba 99,200,180,0.08)
+- Capabilities: teal left-center + deep blue right (rgba 44,95,138,0.12)
+- Final CTA: centered teal glow behind the card (400×300px, rgba 99,200,180,0.12)
+
+These blobs must never be more than 15% opacity. They create atmosphere, not color.
+
+---
+
+## NOISE GRAIN TEXTURE
+
+A very subtle noise texture sits on top of the entire page (position: fixed, inset: 0, pointer-events: none, z-index: 9999) using an inline SVG data URI with feTurbulence. Opacity: 0.5. This adds film-grain depth to the dark backgrounds and makes the glass panels feel more tactile.
+
+---
+
+## ENTRANCE ANIMATIONS (PAGE LOAD)
+
+These elements animate in sequentially on first page load (not scroll-triggered):
+
+- 0.0s: Navbar fades in (opacity 0→1, translateY -10→0)
+- 0.4s: Announcement badge blurs in
+- 0.5s: Hero headline word 1 starts (each subsequent word +100ms)
+- 0.8s: Subheading blurs in
+- 1.0s: CTA buttons
+- 1.1s: Trust chips
+- 1.3s: Stat cards
+- 1.4s: Integrations row
+
+All use the same animation spec: filter blur(10px)→blur(0px), opacity 0→1, translateY(20px)→translateY(0), duration 700ms, easeOut curve.
+
+---
+
+## MOBILE RESPONSIVENESS RULES
+
+- Navbar: hide center pill nav on mobile, show only logo + hamburger icon (or just logo + "Get Started" pill)
+- Hero headline: font-size clamps down to 52px minimum
+- Stat cards: flex-wrap, each card full width on small screens
+- Capabilities cards: single column stack
+- Features section: left nav becomes horizontal pill scroll row, content panel below
+- Pricing: single column stack
+- FAQ: single column
+- Final CTA card: reduce padding to 32px on mobile
+- Footer: single column stack, center-aligned
+
+---
+
+## WHAT MUST NEVER APPEAR ON THIS PAGE
+
+- Any white or light-colored background section
+- Green color (from old site) — replaced entirely with teal/aqua rgba(99,200,180,X)
+- Colored text (red, orange, purple, blue) — white + teal only
+- Drop shadows on text
+- Box shadows on non-glass elements
+- Images of dashboards, screenshots, or product UI mockups
+- Stock photo imagery
+- Any font other than Instrument Serif and Barlow
+- CSS transitions on opacity for video elements (must be rAF if video is used)
+- Generic SaaS patterns: feature lists with tick boxes in a table, comparison tables, colored pricing badges
+
+---
+
+## SUMMARY OF CONTENT MAP
+
+| Section | Type | Key Element |
+|---|---|---|
+| Navbar | Fixed overlay | Glass pill nav + WhatsApp button |
+| Hero | Full viewport | Blur-word headline + stat cards |
+| Problem | Grid bg | 4 pain-point water-glass cards |
+| Capabilities | Dark + glows | 3 tall glass feature cards |
+| All Features | Split layout | 12-category sticky nav + animated panels |
+| Social Proof | Dark | Infinite testimonial marquee + stat cards |
+| Pricing | Centered | 2 glass pricing cards |
+| FAQ | Dark grid | 2-col glass accordion |
+| Final CTA | Dark | Full-bleed glass card + dual CTA |
+| Footer | Black | Minimal 3-col |

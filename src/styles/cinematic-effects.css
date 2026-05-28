@@ -1,0 +1,357 @@
+/* Cinematic Lighting & Atmospheric Engine */
+
+:root {
+  --cinematic-teal: rgba(99, 200, 180, 0.12);
+  --cinematic-teal-glow: rgba(99, 200, 180, 0.25);
+  --cinematic-cyan: rgba(72, 255, 220, 0.15);
+  --cinematic-cyan-glow: rgba(72, 255, 220, 0.3);
+  --cinematic-emerald: rgba(16, 185, 129, 0.08);
+  --cinematic-deep-space: #030206;
+}
+
+/* GPU-accelerated Keyframe Animations */
+@keyframes ambient-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translate3d(-2%, 4%, 0) scale(1.08);
+  }
+}
+
+@keyframes light-beam-drift {
+  0%, 100% {
+    transform: translate3d(-5%, -5%, 0) rotate(-12deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate3d(5%, 5%, 0) rotate(-8deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes slow-fog-drift {
+  0% {
+    transform: translate3d(-10%, -10%, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(10%, 10%, 0) rotate(180deg);
+  }
+  100% {
+    transform: translate3d(-10%, -10%, 0) rotate(360deg);
+  }
+}
+
+@keyframes particle-float-up {
+  0% {
+    transform: translate3d(0, 100vh, 0) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(10vw, -10vh, 0) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes holographic-sweep {
+  0% {
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes slow-breathe {
+  0%, 100% {
+    opacity: 0.4;
+    filter: blur(100px) brightness(0.9);
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(80px) brightness(1.25);
+  }
+}
+
+/* Atmospheric Vignette */
+.cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 60%,
+    var(--shadow-ambient) 90%,
+    transparent 100%
+  );
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Volumetric Atmospheric Fog */
+.cinematic-fog-layer {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 30% 20%, rgba(99, 200, 180, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(72, 255, 220, 0.05) 0%, transparent 60%);
+  filter: blur(90px);
+  animation: slow-fog-drift 40s linear infinite;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  opacity: 0.65;
+  transition: mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Premium Floating Environmental Particles */
+.cinematic-particle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cinematic-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, rgba(99, 200, 180, 0.7) 0%, transparent 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.cinematic-particle-1 { left: 15%; animation: particle-float-up 24s linear infinite; animation-delay: 0s; }
+.cinematic-particle-2 { left: 45%; animation: particle-float-up 32s linear infinite; animation-delay: -5s; width: 4px; height: 4px; }
+.cinematic-particle-3 { left: 75%; animation: particle-float-up 28s linear infinite; animation-delay: -12s; }
+.cinematic-particle-4 { left: 28%; animation: particle-float-up 36s linear infinite; animation-delay: -18s; width: 2px; height: 2px; }
+.cinematic-particle-5 { left: 88%; animation: particle-float-up 30s linear infinite; animation-delay: -8s; }
+.cinematic-particle-6 { left: 60%; animation: particle-float-up 40s linear infinite; animation-delay: -22s; width: 3px; height: 3px; }
+
+/* Volumetric Light Beams */
+.cinematic-light-beam {
+  position: absolute;
+  top: -20%;
+  left: 20%;
+  width: 60vw;
+  height: 150vh;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(99, 200, 180, 0.03) 25%,
+    rgba(72, 255, 220, 0.05) 50%,
+    rgba(99, 200, 180, 0.02) 75%,
+    transparent 100%
+  );
+  filter: blur(60px);
+  transform-origin: top center;
+  animation: light-beam-drift 25s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  transition: mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* SECTION-SPECIFIC LIGHTING BACKDROPS */
+
+/* Hero: Massive Cinematic Spotlight behind main heading */
+.hero-cinematic-spotlight {
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  width: 1000px;
+  height: 700px;
+  background: 
+    radial-gradient(ellipse at 50% 30%, var(--spotlight-primary) 0%, transparent 65%),
+    radial-gradient(circle at 50% 40%, var(--spotlight-secondary) 0%, transparent 75%);
+  filter: blur(100px);
+  animation: slow-breathe 14s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  opacity: var(--spotlight-opacity);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1), 
+              mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Problem: Shadow-heavy mood, faint teal underglow at bottom edge */
+.problem-shadow-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 20% 80%, var(--spotlight-secondary) 0%, transparent 55%),
+    radial-gradient(circle at 80% 90%, var(--spotlight-primary) 0%, transparent 60%);
+  filter: blur(80px);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.problem-underglow {
+  display: none;
+}
+
+/* Capabilities: Soft cyan-emerald bloom circles behind cards */
+.capabilities-bloom-1 {
+  position: absolute;
+  top: 15%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--spotlight-primary) 0%, transparent 70%);
+  filter: blur(90px);
+  animation: ambient-pulse 18s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.capabilities-bloom-2 {
+  position: absolute;
+  bottom: 10%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--spotlight-secondary) 0%, transparent 70%);
+  filter: blur(90px);
+  animation: ambient-pulse 22s ease-in-out infinite;
+  animation-delay: -4s;
+  pointer-events: none;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Features: Holographic scanning line overlay & ambient reflections */
+.features-holo-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 75% 25%, var(--spotlight-primary) 0%, transparent 60%),
+    radial-gradient(circle at 25% 75%, var(--spotlight-secondary) 0%, transparent 60%);
+  filter: blur(80px);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.features-holo-scanner {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(99, 200, 180, 0.015) 48%,
+    var(--glow-accent) 50%,
+    rgba(99, 200, 180, 0.015) 52%,
+    transparent 100%
+  );
+  animation: holographic-sweep 15s linear infinite;
+  opacity: 0.45;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Social Proof: Calming ambient light diffusion */
+.social-proof-diffuser {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 80vw;
+  height: 70%;
+  background: radial-gradient(ellipse at 50% 50%, var(--spotlight-primary) 0%, var(--spotlight-secondary) 50%, transparent 80%);
+  filter: blur(100px);
+  pointer-events: none;
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.marquee-fade-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 15%;
+  background: linear-gradient(to right, var(--section-bg-social) 0%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+  transition: background 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.marquee-fade-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 15%;
+  background: linear-gradient(to left, var(--section-bg-social) 0%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+  transition: background 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Pricing: Showcase spotlight behind cards */
+.pricing-showcase-light {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 800px;
+  height: 600px;
+  background: 
+    radial-gradient(circle at 50% 50%, var(--spotlight-primary) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, var(--spotlight-secondary) 30%, transparent 80%);
+  filter: blur(100px);
+  pointer-events: none;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pricing-growth-underglow {
+  position: absolute;
+  inset: -15px;
+  background: radial-gradient(circle, var(--spotlight-primary) 0%, transparent 70%);
+  filter: blur(25px);
+  pointer-events: none;
+  animation: slow-breathe 8s ease-in-out infinite;
+  z-index: -1;
+  border-radius: 2rem;
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Final CTA: Climax studio-grade spotlight diffusion */
+.cta-climax-spotlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 900px;
+  height: 650px;
+  background: 
+    radial-gradient(circle at 50% 50%, var(--spotlight-primary) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, var(--spotlight-secondary) 10%, transparent 70%);
+  filter: blur(95px);
+  animation: slow-breathe 10s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: var(--spotlight-blend, screen);
+  opacity: var(--spotlight-opacity);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              mix-blend-mode 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
