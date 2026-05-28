@@ -17,22 +17,27 @@ export default function Footer({ onOpenModal, theme = 'dark' }: FooterProps) {
           {/* Left - Logo & Tagline */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <a 
-                href="#home" 
-                aria-label="Automate Flow AI — Home"
-                style={{ textDecoration: 'none' }}
+              <a
+                href="#home"
+                className={`logo-wrap ${theme === 'dark' ? 'dark' : 'light'}`}
               >
-                <div className="logo-only">
-                  <img 
-                    src={theme === 'dark' ? logoDarkMode : logoLightMode} 
-                    alt="Automate Flow AI" 
-                    className="logo-icon"
-                  />
+                <img
+                  src={theme === 'dark' ? logoDarkMode : logoLightMode}
+                  alt="AF"
+                  className="logo-icon h-9 w-auto object-contain"
+                />
+                <div className="flex flex-col">
+                  <span className="logo-text text-xs font-bold tracking-wider leading-none mb-0.5">
+                    AUTOMATE
+                  </span>
+                  <span className="logo-sub text-[9px] font-bold tracking-widest leading-none">
+                    FLOW AI
+                  </span>
                 </div>
               </a>
             </div>
             <p className="font-body font-light text-xs text-foreground/40 max-w-sm leading-relaxed mb-4 transition-colors duration-500">
-              A centralized AI-powered business operating system replacing 12 disconnected platforms to capture leads, orchestrate WhatsApp engagement, and automate workflows.
+              A centralized AI-powered business operating system replacing multiple disconnected platforms to capture leads, orchestrate WhatsApp engagement, and automate workflows.
             </p>
             <p className="font-body text-[11px] text-foreground/30 leading-snug transition-colors duration-500">
               Fremont Office: 45128 Warm Springs Blvd #319, Fremont, CA 94539, USA

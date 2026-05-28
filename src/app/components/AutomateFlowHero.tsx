@@ -36,24 +36,24 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
   const partners = ['WhatsApp', 'Gmail', 'Razorpay', 'Stripe', 'Google'];
 
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       className="relative min-h-screen bg-background text-foreground transition-colors flex flex-col justify-center items-center px-4 pt-24 pb-16"
       onMouseMove={handleMouseMove}
-      style={{ 
-        isolation: 'isolate',
-        background: theme === 'dark' 
-          ? undefined 
+      style={{
+        background: theme === 'dark'
+          ? undefined
           : 'radial-gradient(circle at top, rgba(56,178,172,0.08), transparent 45%), linear-gradient(180deg, #F7F8FA 0%, #EEF2F3 100%)'
       }}
     >
-      {/* Motion Background Effect Layer */}
+      {/* Motion Background Effect Layer — extends beyond section bottom so waves flow into next section */}
       <div
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          left: 0,
           width: '100%',
-          height: '120%',
+          height: '160%',
           overflow: 'visible',
           pointerEvents: 'none',
           userSelect: 'none',
@@ -64,11 +64,11 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
           touchAction: 'none',
           zIndex: 0,
           opacity: 0.85,
-          filter: theme === 'dark' 
-            ? undefined 
+          filter: theme === 'dark'
+            ? undefined
             : 'drop-shadow(0 0 2px rgba(44,122,123,0.15)) drop-shadow(0 0 12px rgba(56,178,172,0.08))',
-          maskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0.85) 70%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0.85) 70%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.3) 85%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.3) 85%, transparent 100%)',
         }}
       >
         {theme === 'dark' ? (
@@ -121,9 +121,20 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
       <div className="cinematic-vignette" style={{ opacity: 0.4 }} />
       <div className="cinematic-light-beam" style={{ top: '-10%', left: '15%', opacity: 0.08 }} />
 
+      {/* Bottom atmospheric blend — fades hero seamlessly into next section */}
+      <div className="hero-bottom-blend" />
+
+      {/* Foreground Vertical Fluid Glass Refraction Border Element */}
+      <div
+        className="vertical-fluid-glass-refraction"
+        style={{
+          transform: `translate3d(${mousePos.x * -12}px, 0, 0)`,
+        }}
+      />
+
 
       {/* Content */}
-      <div 
+      <div
         className="relative z-[2] flex flex-col items-center text-center max-w-4xl px-8 py-10 rounded-[2rem]"
         style={{
           background: theme === 'dark'
@@ -166,8 +177,9 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
           transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}
           className="text-sm md:text-base text-foreground/65 max-w-2xl font-body font-light leading-relaxed mb-8 transition-colors duration-500"
         >
-          One unified AI operating system replacing 12 disconnected platforms to capture leads, orchestrate WhatsApp engagement, and automate your entire customer journey.
+          One unified AI operating system replacing multiple disconnected platforms to capture leads, orchestrate WhatsApp engagement, and automate your entire customer journey.
         </motion.p>
+
 
         {/* CTA Buttons */}
         <motion.div
@@ -186,7 +198,7 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
             Start Free Trial
             <ArrowUpRight className="h-4 w-4 text-slate-900 dark:text-white transition-colors duration-500" />
           </a>
-          <a 
+          <a
             href="https://calendly.com/sanyam-chhoriya/automate-flow-ai-demo?month=2026-05"
             target="_blank"
             rel="noopener noreferrer"
@@ -205,9 +217,9 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
           className="flex flex-wrap items-center gap-2.5 justify-center mb-8 max-w-4xl"
         >
           {[
-            'No Credit Card Required', 
-            '7-Day Free Trial', 
-            'AI-Powered Workflows', 
+            'No Credit Card Required',
+            '7-Day Free Trial',
+            'AI-Powered Workflows',
             'WhatsApp Integrated API'
           ].map((text) => (
             <span
