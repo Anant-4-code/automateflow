@@ -44,15 +44,15 @@ export default function AutomateFlowNavbar({ theme = 'dark', toggleTheme }: Navb
         transition: 'background 400ms cubic-bezier(0.16,1,0.3,1), backdrop-filter 400ms ease, border-color 400ms ease',
         ...(scrolled
           ? {
-              background: theme === 'dark'
-                ? 'rgba(8, 12, 18, 0.78)'
-                : 'rgba(245, 248, 252, 0.82)',
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
-              borderBottom: theme === 'dark'
-                ? '1px solid rgba(255,255,255,0.07)'
-                : '1px solid rgba(0,0,0,0.08)',
-            }
+            background: theme === 'dark'
+              ? 'rgba(8, 12, 18, 0.78)'
+              : 'rgba(245, 248, 252, 0.82)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            borderBottom: theme === 'dark'
+              ? '1px solid rgba(255,255,255,0.07)'
+              : '1px solid rgba(0,0,0,0.08)',
+          }
           : {}),
       }}
     >

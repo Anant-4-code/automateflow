@@ -244,7 +244,7 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
               <TrendingUp className="h-5 w-5 text-[#63ffd7]" />
             </div>
             <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
-              Reduce Operational Costs Through Intelligent Automation
+              Save 3X Time. Do More. Generate More Revenue.
             </div>
           </div>
 
@@ -264,7 +264,7 @@ export default function AutomateFlowHero({ theme = 'dark' }: AutomateFlowHeroPro
               <DollarSign className="h-5 w-5 text-[#63ffd7]" />
             </div>
             <div className="font-heading text-foreground text-2xl md:text-3xl tracking-tight leading-snug mb-3 z-10 transition-colors duration-500 text-left">
-              Save Time. Do More. Generate More Revenue.
+              Save At Least a Thousand Dollars Every Month
             </div>
           </div>
         </motion.div>
